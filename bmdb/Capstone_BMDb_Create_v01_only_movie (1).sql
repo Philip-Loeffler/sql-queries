@@ -7,13 +7,54 @@ USE bmdb;
 -- DROP TABLE IF EXISTS Movie;
 Create table Movie (
 ID 			integer 		primary key auto_increment,
-Title 		varchar(255) 	not null unique,
+Title 		varchar(255) 	not null,
 Year 		integer 		not null,
 Rating 		varchar(5) 		not null,
-Director 	varchar(255) 	not null
--- CONSTRAINT utitle unique (Title)
+Director 	varchar(255) 	not null,
+CONSTRAINT unq_movie unique (Title, Year)
 );
 
+-- create Actor table
+Create table Actor (
+ID          integer         primary key auto_increment,
+FirstName   varchar(255)    not null,
+LastName    varchar(255)    not null,
+Gender      varchar(1)      not null,
+BirthDate   date            not null,
+CONSTRAINT unq_actor unique (FirstName, LastName, BirthDate)
+);
+
+
+-- create credit table
+Create table Credit (
+ID 			integer 		primary key auto_increment,
+ActorID 	integer 		not null,
+MovieID 	integer			not null,
+Role 		varchar(255) 	not null,
+Foreign Key (ActorID) references Actor(ID),
+Foreign Key (MovieID) references Movie(ID),
+CONSTRAINT act_mov unique (ActorID, MovieID)
+);
+
+
+ insert into Credit VALUES
+ 	(1, 1, 1, 'Luke Skywalker'),
+    (2, 2, 1, 'Han Solo'),
+    (3, 3, 2, 'Samantha'),
+    (4, 4, 2, 'Farmer Ted');
+
+
+
+-- add some actors 
+-- date fields are yyy-mm-dd
+ insert into Actor VALUES
+ 	(1, 'Mark ', 'Hamill', 'M', '1951-09-25'),
+	(2, 'Harrison ', 'Ford', 'M', '1942-07-13'),
+	(3, 'Molly ', 'Ringwald', 'F', '1968-02-18'),
+	(4, 'Anthony Michael ', 'Hall', 'M', '1968-04-14');
+
+
+    
 -- Add some movies
  insert into Movie VALUES
  	(1, 'Star Wars', 1977, 'PG', 'George Lucas'),
