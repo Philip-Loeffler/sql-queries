@@ -1,6 +1,6 @@
 -- create / alter a view
 -- alter view movieCredits as 
-create view movieCredits as 
+-- create view movieCredits as 
 select m.Title, m.Year, a.FirstName, a.LastName, c.Role 
   from actor a
   join credit c
